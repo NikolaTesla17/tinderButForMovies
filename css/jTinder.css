@@ -30,6 +30,10 @@ body {
     height: 100%;
 }
 
+.dText {
+    padding-top: 1%;
+}
+
 #tinderslide li {
     font-family: "Lucida Console", Courier, monospace;
 
