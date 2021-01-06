@@ -5,6 +5,18 @@ const {joinUser, removeUser, findUser} = require('./users');
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
 });
+
+
+const { MovieDb } = require('moviedb-promise')
+const moviedb = new MovieDb('7ebb7372a3c9fe1bbc2a149c8e67cdbb')
+
+// console.log(moviedb.moviePopular());
+
+moviedb.moviePopular().then(res => {
+    console.log(res.results.original_title)
+  }).catch(console.error)
+
+
 let thisRoom = "";
 io.on("connection", function (socket) {
   console.log("connected");
