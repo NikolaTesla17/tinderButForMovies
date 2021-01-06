@@ -44,6 +44,11 @@
         displayMessage(data);
     });
 
+    socket.on("movies", (data) => {
+        console.log(data);
+      console.log(data[0]);
+    });
+
     function displayMessage(data) {
         let authorClass = "";
       let divClass = ""

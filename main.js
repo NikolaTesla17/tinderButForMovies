@@ -1,20 +1,28 @@
-var app = require("express")();
+//var app = require("express")();
+var express = require('express');
+var app = express();
+app.use('/', express.static(__dirname + '/client/'));
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
-const {joinUser, removeUser, findUser} = require('./users');
-app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/index.html");
-});
-
+var movieTitles = [];
 
 const { MovieDb } = require('moviedb-promise')
 const moviedb = new MovieDb('7ebb7372a3c9fe1bbc2a149c8e67cdbb')
 
-// console.log(moviedb.moviePopular());
-
 moviedb.moviePopular().then(res => {
-    console.log(res.results.original_title)
+    var i;
+    for(i=0;i<9;i++){
+    // console.log(res.results[i].original_title)
+    movieTitles[i] = res.results[i].original_title;
+}
   }).catch(console.error)
+
+const {joinUser, removeUser, findUser} = require('./users');
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/client/index.html");
+});
+
+
 
 
 let thisRoom = "";
@@ -22,6 +30,7 @@ io.on("connection", function (socket) {
   console.log("connected");
   socket.on("join room", (data) => {
     console.log('in room');
+
     let Newuser = joinUser(socket.id, data.username,data.roomName)
     //io.to(Newuser.roomname).emit('send data' , {username : Newuser.username,roomname : Newuser.roomname, id : socket.id})
    // io.to(socket.id).emit('send data' , {id : socket.id ,username:Newuser.username, roomname : Newuser.roomname });
@@ -30,6 +39,12 @@ io.on("connection", function (socket) {
     thisRoom = Newuser.roomname;
     console.log(Newuser);
     socket.join(Newuser.roomname);
+
+
+
+
+    io.to(thisRoom).emit("movies", {data:movieTitles});
+
   });
   socket.on("chat message", (data) => {
     io.to(thisRoom).emit("chat message", {data:data,id : socket.id});

@@ -6,13 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TFM</title>
     <link rel="stylesheet" type="text/css" href="css/jTinder.css">
+
+
+    <script src="/socket.io/socket.io.js"></script>
+
+
 </head>
 <body>
     <!-- start padding container -->
     <div class="wrap">
         <!-- start jtinder container -->
         <div id="tinderslide">
-            <ul>
+            <ul id="Movies">
                 <li class="pane1">
                     <div class="img"></div>
                     <div class="dText">Miami Beach</div>
@@ -56,5 +61,93 @@
     <script type="text/javascript" src="js/jquery.jTinder.js"></script>
     <!-- jTinder initialization script -->
     <script type="text/javascript" src="js/main.js"></script>
+
+
+    <script>
+        let userName = prompt("whats your name");
+        let room = prompt("room name");
+        let ID = "";
+        var socket = io();
+        //send event that user has joined room
+        socket.emit("join room", {username : userName, roomName : room});
+    
+        // //receive data from server.
+        // socket.on('send data',(data)=>{
+        //     ID = data.id; //ID will be used later
+        //     console.log(" my ID:" + ID);
+        // })
+        // $("#m").focus();
+        // //when form is submitted, capture the input value and then send it to server
+        // document
+        //   .getElementsByTagName("form")[0]
+        //   .addEventListener("submit", function (event) {
+        //     event.preventDefault();
+        //     socket.emit("chat message", {
+        //       value: document.getElementById("m").value,
+        //       user: userName,
+            
+        //     });
+    
+        //     document.getElementById("m").value = "";
+        //   });
+        // socket.on("chat message", (data) => {
+        //   console.log(data.data.user + ": " + data.id);
+        //     displayMessage(data);
+        // });
+    
+        socket.on("movies", (data) => {
+            console.log(data);
+          console.log(data.data[0]);
+
+
+          var list = document.getElementById('Movies');
+          var firstname = '<div class="img"></div><div class="dText">Miami Beach</div>';
+          var entry = document.createElement('li');
+          entry.setAttribute("class", "pane1");
+          entry.appendChild(document.createTextNode(firstname));
+          list.appendChild(entry);
+
+
+
+
+        });
+    
+        // function displayMessage(data) {
+        //     let authorClass = "";
+        //   let divClass = ""
+        //   //verify that the user ID and the message sent ID is similar 
+        //   if (data.id === ID) {
+        //       console.log("This person has sent a message")
+        //     authorClass = "me";
+        //     divClass = "myDiv";
+        //   } else {
+        //     authorClass = "you";
+        //     divClass = "yourDiv";
+        //   }
+        //   const div = document.createElement("div");
+        //   div.className = divClass;
+        //   const li = document.createElement("li");
+        //   const p = document.createElement("p");
+        //   p.className = "time";
+        //   p.innerText = moment().format("hh:mm");
+        //   div.innerHTML =
+        //     '<p class="' +
+        //     authorClass +
+        //     '">' +
+        //     data.data.user +
+        //     "</p>" +
+        //     '<p class="message"> ' +
+        //     data.data.value +
+        //     "</p>";
+        //   div.appendChild(p);
+        //   li.appendChild(div);
+    
+        //   document.getElementById("messages").appendChild(li);
+        //   //scroll to the bottom
+        //   window.scrollTo(0, document.body.scrollHeight);
+        // }
+      </script>
+
+
 </body>
 </html>
