@@ -50,11 +50,27 @@ io.on("connection", function (socket) {
 
 
 
-    
+
   });
-  socket.on("chat message", (data) => {
+
+
+//   socket.on("chat message", (data) => {
+//     io.to(thisRoom).emit("chat message", {data:data,id : socket.id});
+//   });
+
+
+socket.on("like", (data) => {
     io.to(thisRoom).emit("chat message", {data:data,id : socket.id});
   });
+  socket.on("dislike", (data) => {
+    io.to(thisRoom).emit("chat message", {data:data,id : socket.id});
+  });
+
+
+
+
+
+
   socket.on("disconnect", () => {
     const user = removeUser(socket.id);
     console.log(user);

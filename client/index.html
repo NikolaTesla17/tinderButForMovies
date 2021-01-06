@@ -51,7 +51,7 @@
     </div> -->
 
     <!-- jTinder status text  -->
-    <div id="status"></div>
+    <!-- <div id="status"></div> -->
 
     <!-- jQuery lib -->
     <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -59,8 +59,63 @@
     <script type="text/javascript" src="js/jquery.transform2d.js"></script>
     <!-- jTinder lib -->
     <script type="text/javascript" src="js/jquery.jTinder.js"></script>
+
+
+
+
+
+
+
+
+
+
     <!-- jTinder initialization script -->
-    <script type="text/javascript" src="js/main.js"></script>
+    <!-- <script>
+        $("#tinderslide").jTinder({
+	// dislike callback
+    onDislike: function (item) {
+
+
+		//socket.emit("dislike", {username : userName, roomName : room, item = item.index()});
+		console.log("dislike");
+
+		//$('#status').html('Dislike image ' + (item.index()+1));
+    },
+	// like callback
+    onLike: function (item) {
+
+		
+		//socket.emit("like", {username : userName, roomName : room, item = item.index()});
+		console.log("like");
+
+        //$('#status').html('Like image ' + (item.index()+1));
+    },
+	animationRevertSpeed: 200,
+	animationSpeed: 400,
+	threshold: 1,
+	likeSelector: '.like',
+	dislikeSelector: '.dislike'
+});
+
+/**
+ * Set button action to trigger jTinder like & dislike.
+ */
+$('.actions .like, .actions .dislike').click(function(e){
+	e.preventDefault();
+	$("#tinderslide").jTinder($(this).attr('class'));
+});
+    </script> -->
+
+
+
+
+
+
+
+
+
+
+
 
 
     <script>
@@ -71,6 +126,7 @@
         //send event that user has joined room
         socket.emit("join room", {username : userName, roomName : room});
     
+
         // //receive data from server.
         // socket.on('send data',(data)=>{
         //     ID = data.id; //ID will be used later
@@ -165,6 +221,42 @@ var k = 0;
         //   //scroll to the bottom
         //   window.scrollTo(0, document.body.scrollHeight);
         // }
+
+
+
+        $("#tinderslide").jTinder({
+	// dislike callback
+    onDislike: function (item) {
+
+
+		socket.emit("dislike", {username : userName, roomName : room, item : item.index()});
+		console.log("dislike");
+
+		//$('#status').html('Dislike image ' + (item.index()+1));
+    },
+	// like callback
+    onLike: function (item) {
+
+		
+		socket.emit("like", {username : userName, roomName : room, item = item.index()});
+		console.log("like");
+
+        //$('#status').html('Like image ' + (item.index()+1));
+    },
+	animationRevertSpeed: 200,
+	animationSpeed: 400,
+	threshold: 1,
+	likeSelector: '.like',
+	dislikeSelector: '.dislike'
+});
+
+/**
+ * Set button action to trigger jTinder like & dislike.
+ */
+$('.actions .like, .actions .dislike').click(function(e){
+	e.preventDefault();
+	$("#tinderslide").jTinder($(this).attr('class'));
+});
       </script>
 
 
