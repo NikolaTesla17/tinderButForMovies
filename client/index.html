@@ -229,7 +229,6 @@ var k = 0;
     onDislike: function (item) {
 
 
-		socket.emit("dislike", {username : userName, roomName : room, item : item.index()});
 		console.log("dislike");
 
 		//$('#status').html('Dislike image ' + (item.index()+1));

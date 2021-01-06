@@ -60,10 +60,8 @@ io.on("connection", function (socket) {
 
 
 socket.on("like", (data) => {
-    io.to(thisRoom).emit("chat message", {data:data,id : socket.id});
-  });
-  socket.on("dislike", (data) => {
-    io.to(thisRoom).emit("chat message", {data:data,id : socket.id});
+    //serverside check likes?
+    io.to(thisRoom).emit("like", {data:data.id : socket.id});
   });
 
 
