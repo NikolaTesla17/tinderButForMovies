@@ -20,23 +20,23 @@
             <ul id="Movies">
                 <li class="pane1">
                     <div class="img" id="pane1Img"></div>
-                    <div class="dText" id="pane1Txt">Miami Beach</div>
+                    <div class="dText" id="pane1Txt">Loading</div>
                 </li>
                 <li class="pane2">
-                    <div class="img"></div>
-                    <div class="dText">Miami Beach</div>
+                    <div class="img" id="pane2Img"></div>
+                    <div class="dText" id="pane2Txt">Loading</div>
                 </li>
                 <li class="pane3">
-                    <div class="img"></div>
-                    <div class="dText">Miami Beach</div>
+                    <div class="img" id="pane3Img"></div>
+                    <div class="dText" id="pane3Txt">Loading</div>
                 </li>
                 <li class="pane4">
-                    <div class="img"></div>
-                    <div class="dText">Miami Beach</div>
+                    <div class="img" id="pane4Img"></div>
+                    <div class="dText" id="pane4Txt">Loading</div>
                 </li>
                 <li class="pane5">
-                    <div class="img"></div>
-                    <div class="dText">Miami Beach</div>
+                    <div class="img" id="pane5Img"></div>
+                    <div class="dText" id="pane5Txt">Loading</div>
                 </li>
             </ul>
         </div>
@@ -99,9 +99,17 @@
           console.log(data.movieTitles[0]);
           console.log(data.Images[0]);
 
-          document.getElementById("pane1Txt").textContent=data.movieTitles[0];
-          document.getElementById("pane1Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[0] + '")';
-          document.getElementById("pane1Img").style.backgroundSize = "100% 100%";
+var k = 0;
+          for(var i=5;i>=1;i--){
+            document.getElementById("pane" + i + "Txt").textContent=data.movieTitles[k];
+            document.getElementById("pane" + i + "Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[k] + '")';
+          document.getElementById("pane" + i + "Img").style.backgroundSize = "100% 100%";
+            k++;
+          }
+
+          //document.getElementById("pane1Txt").textContent=data.movieTitles[0];
+        //   document.getElementById("pane1Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[0] + '")';
+        //   document.getElementById("pane1Img").style.backgroundSize = "100% 100%";
 
 
           //document.getElementsByClassName(pane1).style.background = new style

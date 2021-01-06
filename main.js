@@ -47,6 +47,10 @@ io.on("connection", function (socket) {
 
     io.to(thisRoom).emit("movies", {movieTitles,Images});
 
+
+
+
+    
   });
   socket.on("chat message", (data) => {
     io.to(thisRoom).emit("chat message", {data:data,id : socket.id});
