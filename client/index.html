@@ -19,8 +19,8 @@
         <div id="tinderslide">
             <ul id="Movies">
                 <li class="pane1">
-                    <div class="img"></div>
-                    <div class="dText">Miami Beach</div>
+                    <div class="img" id="pane1Img"></div>
+                    <div class="dText" id="pane1Txt">Miami Beach</div>
                 </li>
                 <li class="pane2">
                     <div class="img"></div>
@@ -43,7 +43,6 @@
         <!-- end jtinder container -->
     </div>
     <!-- end padding container -->
-
     <!-- jTinder trigger by buttons  -->
     <!-- <div class="actions">
         <a href="#" class="dislike"><i></i></a>
@@ -100,12 +99,17 @@
           console.log(data.data[0]);
 
 
-          var list = document.getElementById('Movies');
-          var firstname = '<div class="img"></div><div class="dText">Miami Beach</div>';
-          var entry = document.createElement('li');
-          entry.setAttribute("class", "pane1");
-          entry.appendChild(document.createTextNode(firstname));
-          list.appendChild(entry);
+          //document.getElementsByClassName(pane1).style.background = new style
+          //style='background: url("../img/pane/pane5.jpg") no-repeat scroll center center;background-size: cover;'
+
+
+
+        //   var list = document.getElementById('Movies');
+        //   var text = '<div class="img"></div>\n<div class="dText">Miami Beach</div>\n';
+        //   var entry = document.createElement('li');
+        //   entry.setAttribute("class", "pane1");
+        //   entry.appendChild(document.createTextNode(text));
+        //   list.appendChild(entry);
 
 
 
