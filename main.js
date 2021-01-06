@@ -61,7 +61,8 @@ io.on("connection", function (socket) {
 
 socket.on("like", (data) => {
     //serverside check likes?
-    io.to(thisRoom).emit("like", {data:data.id : socket.id});
+    //io.to(thisRoom).emit("like", {data:data.id : socket.id});
+    console.log("got like" + data.id + data.item)
   });
 
 

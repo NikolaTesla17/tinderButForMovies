@@ -35,6 +35,11 @@ body {
 }
 
 #tinderslide li {
+    border-radius: 50px;
+
+
+
+
     font-family: "Lucida Console", Courier, monospace;
 
     display: block;
@@ -105,6 +110,8 @@ body {
 
 /* Image container */
 #tinderslide .img {
+    border-radius: 50px;
+
     height: 90%;
     width: 100%;
     margin-bottom: 5px;
