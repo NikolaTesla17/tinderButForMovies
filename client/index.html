@@ -96,11 +96,17 @@
     
         socket.on("movies", (data) => {
             console.log(data);
-          console.log(data.data[0]);
+          console.log(data.movieTitles[0]);
+          console.log(data.Images[0]);
+
+          document.getElementById("pane1Txt").textContent=data.movieTitles[0];
+          document.getElementById("pane1Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[0] + '")';
+          document.getElementById("pane1Img").style.backgroundSize = "100% 100%";
 
 
           //document.getElementsByClassName(pane1).style.background = new style
           //style='background: url("../img/pane/pane5.jpg") no-repeat scroll center center;background-size: cover;'
+            //https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
 
 
 

@@ -5,6 +5,7 @@ app.use('/', express.static(__dirname + '/client/'));
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var movieTitles = [];
+var Images = [];
 
 const { MovieDb } = require('moviedb-promise')
 const moviedb = new MovieDb('7ebb7372a3c9fe1bbc2a149c8e67cdbb')
@@ -12,8 +13,9 @@ const moviedb = new MovieDb('7ebb7372a3c9fe1bbc2a149c8e67cdbb')
 moviedb.moviePopular().then(res => {
     var i;
     for(i=0;i<9;i++){
-    // console.log(res.results[i].original_title)
+    //console.log(res.results[i])
     movieTitles[i] = res.results[i].original_title;
+    Images[i] = res.results[i].poster_path;
 }
   }).catch(console.error)
 
@@ -43,7 +45,7 @@ io.on("connection", function (socket) {
 
 
 
-    io.to(thisRoom).emit("movies", {data:movieTitles});
+    io.to(thisRoom).emit("movies", {movieTitles,Images});
 
   });
   socket.on("chat message", (data) => {

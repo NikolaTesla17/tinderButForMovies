@@ -138,10 +138,10 @@ body {
     background: url("../img/pane/pane2.jpg") no-repeat scroll center center;
     background-size: cover;
 }
-#tinderslide .pane1 .img {
+/* #tinderslide .pane1 .img {
     background: url("") no-repeat scroll center center;
     background-size: cover;
-}
+} */
 
 /* jTinder status text */
 #status {
