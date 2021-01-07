@@ -19,7 +19,7 @@ moviedb.moviePopular().then(res => {
 }
   }).catch(console.error)
 
-const {joinUser, removeUser, findUser} = require('./users');
+// const {joinUser, removeUser, findUser} = require('./users');
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/client/index.html");
 });
@@ -27,14 +27,6 @@ app.get("/", function (req, res) {
 
 
 
-function search(nameKey, myArray){
-    for (var i=0; i < myArray.length; i++) {
-        if (myArray[i].name === nameKey) {
-            return myArray[i];
-        }
-    }
-    return;
-}
 
 
 
@@ -45,59 +37,64 @@ rooms = [];
 // let thisRoom = {room:"",movies:[],people:0,sockets:[]};
 io.on("connection", function (socket) {
   socket.on("join room", (data) => {
-    // let Newuser = joinUser(socket.id, data.username,data.roomName)
 
 
-
-
-
-    io.to(socketid).emit('message', 'for your eyes only');
 
     var foundRoom = false;
     for (var i=0; i < rooms.length; i++) {
         if (rooms[i].room == data.roomname) {
             rooms[i].people++;
+            rooms[i].sockets.push(socket.id);
             foundRoom = true;
         }
     }
     if(!foundRoom){
-        rooms.push({room:data.roomname,movies:[],people:1});
+        rooms.push({room:data.roomname,movies:[],people:1,sockets:[socket.id]});
     }
     socket.join(data.roomname);
 
 
 
 
-    io.to(thisRoom.room).emit("movies", {movieTitlesPopular,Images});
+    io.to(data.roomname).emit("movies", {movieTitlesPopular,Images});
+    console.log(rooms);
   });
 
 
   socket.on("dislike", (data) => {
-
-        console.log("this room" + data.item);
-
-        if(typeof(thisRoom.movies[data.item]) == "undefined"){
-            thisRoom.movies[data.item]=0;
+        // if(typeof(rooms.movies[data.item]) == "undefined"){
+        //     thisRoom.movies[data.item]=0;
+        // }
+        for (var i=0; i < rooms.length; i++) {
+            if (rooms[i].room == data.roomName) {
+                var roomNum = i;
+            }
         }
+        if(typeof(rooms[roomNum].movies[data.movie]) == "undefined"){
+            rooms[roomNum].movies[data.movie] = 0;
+        }
+
+        console.log(rooms);
   });
 
   socket.on("like", (data) => {
-    console.log("this room" + data.item);
 
-    if(typeof(thisRoom.movies[data.item]) == "undefined"){
-        thisRoom.movies[data.item]=0;
+
+
+    for (var i=0; i < rooms.length; i++) {
+        if (rooms[i].room == data.roomName) {
+            var roomNum = i;
+        }
     }
-    thisRoom.movies[data.item]++;
-
-    console.log(thisRoom.movies[data.item]+" votes out of "+thisRoom.people)
-    console.log(thisRoom);
-
-
-    if(thisRoom.movies[data.item]==thisRoom.people){ 
-        movieTitle = movieTitlesPopular[data.item];
-        imgUrl = Images[data.item];
-        io.to(thisRoom.room).emit("match", {movieTitle,imgUrl});
+    if(typeof(rooms[roomNum].movies[data.movie]) == "undefined"){
+        rooms[roomNum].movies[data.movie] = 0;
     }
+    rooms[roomNum].movies[data.movie]++;
+    if(rooms[roomNum].movies[data.movie]==rooms[roomNum].people){
+        console.log("we have a match")
+    }
+
+    console.log(rooms);
   });
 
 
@@ -106,13 +103,15 @@ io.on("connection", function (socket) {
 
 
   socket.on("disconnect", () => {
-    const user = removeUser(socket.id);
-    console.log(user);
-    if(user) {
-      console.log(user.username + ' has left');
+    for (var i=0; i < rooms.length; i++) {
+        if (rooms[i].sockets.includes(socket.id)) {
+            rooms[i].people--;
+            rooms[i].sockets.splice(rooms[i].sockets.indexOf(socket.id),1);
+        }
     }
-    console.log("disconnected");
 
+
+    console.log(rooms);
   });
 });
 

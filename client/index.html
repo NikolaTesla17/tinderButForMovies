@@ -79,12 +79,9 @@
 
 
     <script>
-        let userName = prompt("whats your name");
         let room = prompt("room name");
-        let ID = "";
         var socket = io();
-        //send event that user has joined room
-        socket.emit("join room", {username : userName, roomName : room});
+        socket.emit("join room", {roomname : room});
     
 
 
@@ -269,8 +266,11 @@ socket.on("match", (data) => {
 	// dislike callback
     onDislike: function (item) {
 
-        if(!(item.index()==7||item.index()==1)){
-		socket.emit("dislike", {username : userName, roomName : room, item : 5-item.index()});
+        console.log(item.index());
+
+
+        if(!(item.index()==6||item.index()==0)){
+		socket.emit("dislike", {roomName : room, movie : 5-item.index()});
         }
 		console.log("dislike");
 
@@ -279,9 +279,11 @@ socket.on("match", (data) => {
 	// like callback
     onLike: function (item) {
 
-        if(!(item.index()==7||item.index()==1)){
-            console.log(item.index());
-		socket.emit("like", {username : userName, roomName : room, item : 5-item.index()});
+
+        console.log(item.index());
+
+        if(!(item.index()==6||item.index()==0)){
+		socket.emit("like", {roomName : room, movie : 5-item.index()});
         }
         console.log("like");
         //$('#status').html('Like image ' + (item.index()+1));
