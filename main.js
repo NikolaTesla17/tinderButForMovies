@@ -96,16 +96,19 @@ socket.on("like", (data) => {
     if(typeof(thisRoom.movies[data.item]) == "undefined"){
         thisRoom.movies[data.item]=0;
     }
-    thisRoom.movies[data.item]+=1;
+    thisRoom.movies[data.item]++;
 
     console.log(thisRoom.movies[data.item]+" votes out of "+thisRoom.people)
     console.log(thisRoom);
 
 
     if(thisRoom.movies[data.item]==thisRoom.people){
-        movieNum = data.item;
-        io.to(thisRoom.room).emit("match", {movie:movieTitles[movieNum],image:Images[movieNum]});
-        socket.emit('match' , {});
+        // movieNum = data.item+1;
+        // console.log("data item" + Images[movieNum] + "        " + movieTitles[movieNum]);  
+        movieTitle = movieTitles[data.item+1];
+        imgUrl = Images[data.item+1];
+        console.log("stuf" + movieTitle + imgUrl)
+        io.to(thisRoom.room).emit("match", {movieTitle,imgUrl});
     }
   });
 

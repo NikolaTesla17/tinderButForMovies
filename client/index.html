@@ -146,15 +146,15 @@ socket.on("movies", (data) => {
 
 
 
-        socket.on("match", (data) => {
+socket.on("match", (data) => {
     console.log("matchFound " + data);
-    console.log("matchFound " + data.movie);
+    console.log("matchFound " + data.movieTitle);
     $("#world").addClass("open");
 
     $("#tinderslide .finishedPane").addClass("open");
 
-        document.getElementById("finishedPane" + "Txt").textContent=data.movieTitles[data.movie];
-        document.getElementById("finishedPane" + "Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[data.movie] + '")';
+        document.getElementById("finishedPane" + "Txt").textContent=data.movieTitle;
+        document.getElementById("finishedPane" + "Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.imgUrl + '")';
         document.getElementById("finishedPane" + "Img").style.backgroundSize = "100% 100%";
 
 
