@@ -6,7 +6,6 @@ var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var movieTitles = [];
 var Images = [];
-var Rooms = {};
 
 const { MovieDb } = require('moviedb-promise')
 const moviedb = new MovieDb('7ebb7372a3c9fe1bbc2a149c8e67cdbb')
@@ -28,7 +27,7 @@ app.get("/", function (req, res) {
 
 
 
-let thisRoom = "";
+let thisRoom = {room:"",movies:[],people:0};
 io.on("connection", function (socket) {
 
 
@@ -45,14 +44,14 @@ io.on("connection", function (socket) {
    // io.to(socket.id).emit('send data' , {id : socket.id ,username:Newuser.username, roomname : Newuser.roomname });
    socket.emit('send data' , {id : socket.id ,username:Newuser.username, roomname : Newuser.roomname });
    
-    thisRoom = Newuser.roomname;
+    thisRoom.room = Newuser.roomname;
     console.log(Newuser);
     socket.join(Newuser.roomname);
 
+    thisRoom.people+=1;
 
 
-
-    io.to(thisRoom).emit("movies", {movieTitles,Images});
+    io.to(thisRoom.room).emit("movies", {movieTitles,Images});
 
 
 
@@ -61,8 +60,30 @@ io.on("connection", function (socket) {
 
 
 //   socket.on("chat message", (data) => {
-//     io.to(thisRoom).emit("chat message", {data:data,id : socket.id});
+//     io.to(thisRoFthiom).emit("chat message", {data:data,id : socket.id});
 //   });
+
+socket.on("dislike", (data) => {
+    //serverside check likes?
+    //io.to(thisRoom).emit("like", {data:data.id : socket.id});
+
+    //console.log("User");
+    console.log("this room" + data.item);
+
+    if(typeof(thisRoom.movies[data.item]) == "undefined"){
+        thisRoom.movies[data.item]=0;
+    }
+    // thisRoom.movies[data.item]+=1;
+
+    console.log(thisRoom.movies[data.item]+" votes out of "+thisRoom.people)
+    console.log(thisRoom);
+
+
+
+  });
+
+
+
 
 
 socket.on("like", (data) => {
@@ -70,13 +91,22 @@ socket.on("like", (data) => {
     //io.to(thisRoom).emit("like", {data:data.id : socket.id});
 
     //console.log("User");
-    console.log("this room" +thisRoom);
-    console.log("got like from " + data.username + " on the movie at " + data.item + " for the room " + data.roomName)
+    console.log("this room" + data.item);
+
+    if(typeof(thisRoom.movies[data.item]) == "undefined"){
+        thisRoom.movies[data.item]=0;
+    }
+    thisRoom.movies[data.item]+=1;
+
+    console.log(thisRoom.movies[data.item]+" votes out of "+thisRoom.people)
+    console.log(thisRoom);
 
 
-    //rooms[data.item]+=1;
-
-
+    if(thisRoom.movies[data.item]==thisRoom.people){
+        movieNum = data.item;
+        io.to(thisRoom.room).emit("match", {movie:movieTitles[movieNum],image:Images[movieNum]});
+        socket.emit('match' , {});
+    }
   });
 
 

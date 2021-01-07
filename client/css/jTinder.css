@@ -159,6 +159,15 @@ body {
     background-size: cover;
 }
 
+/* #tinderslide .finishedPane .img { */
+    /* background: url("../img/pane/tutorialPane.png") no-repeat scroll center center;
+    background-size: cover; */
+/* } */
+/* #tinderslide .tutorialPane .img {
+    background: url("../img/pane/tutorialPane.png") no-repeat scroll center center;
+    background-size: cover;
+} */
+
 
 /* jTinder status text */
 #status {
@@ -168,3 +177,34 @@ body {
     margin-top: 30px;
     font-weight: bold;
 }
+
+
+
+
+
+
+#tinderslide .finishedPane.open {
+    z-index: 1000;
+}
+
+
+#world {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0);
+    position: fixed;
+    z-index: 10000;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    will-change: opacity, visibility;
+  }
+  
+  #world.open {
+    visibility: initial; 
+    opacity: 1;
+    transition: opacity .5s ease, visibility 0.5s ease;
+  }
