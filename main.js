@@ -105,9 +105,8 @@ socket.on("like", (data) => {
     if(thisRoom.movies[data.item]==thisRoom.people){
         // movieNum = data.item+1;
         // console.log("data item" + Images[movieNum] + "        " + movieTitles[movieNum]);  
-        movieTitle = movieTitles[data.item+1];
-        imgUrl = Images[data.item+1];
-        console.log("stuf" + movieTitle + imgUrl)
+        movieTitle = movieTitles[data.item];
+        imgUrl = Images[data.item];
         io.to(thisRoom.room).emit("match", {movieTitle,imgUrl});
     }
   });

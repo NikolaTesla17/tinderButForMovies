@@ -24,11 +24,6 @@
                     <div class="img" id="finishedPaneImg"></div>
                     <div class="dText" id="finishedPaneTxt">Loading</div>
                 </li>
-
-                <li class="finalPane">
-                    <div class="img" id="finalPaneImg"></div>
-                    <div class="dText" id="finalPaneTxt">Finished, Swipe this to find more movies</div>
-                </li>
                 <li class="pane1">
                     <div class="img" id="pane1Img"></div>
                     <div class="dText" id="pane1Txt">Loading</div>
@@ -110,25 +105,7 @@ socket.on("movies", (data) => {
             document.getElementById("pane" + i + "Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[k] + '")';
           document.getElementById("pane" + i + "Img").style.backgroundSize = "100% 100%";
             k--;
-          }
-
-          //document.getElementById("pane1Txt").textContent=data.movieTitles[0];
-        //   document.getElementById("pane1Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[0] + '")';
-        //   document.getElementById("pane1Img").style.backgroundSize = "100% 100%";
-
-
-          //document.getElementsByClassName(pane1).style.background = new style
-          //style='background: url("../img/pane/pane5.jpg") no-repeat scroll center center;background-size: cover;'
-            //https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
-
-
-
-        //   var list = document.getElementById('Movies');
-        //   var text = '<div class="img"></div>\n<div class="dText">Miami Beach</div>\n';
-        //   var entry = document.createElement('li');
-        //   entry.setAttribute("class", "pane1");
-        //   entry.appendChild(document.createTextNode(text));
-        //   list.appendChild(entry);
+                    }
 
 
 
@@ -288,23 +265,11 @@ socket.on("match", (data) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         $("#tinderslide").jTinder({
 	// dislike callback
     onDislike: function (item) {
 
-        if(!(item.index()==6||item.index()==0)){
+        if(!(item.index()==7||item.index()==1)){
 		socket.emit("dislike", {username : userName, roomName : room, item : 5-item.index()});
         }
 		console.log("dislike");

@@ -84,7 +84,7 @@ body {
 /* Image rotation */
 
 /* Like & dislike badge images */
-#tinderslide .like,
+/* #tinderslide .like,
 #tinderslide .dislike {
     opacity: 0;
     height: 80px;
@@ -101,7 +101,7 @@ body {
     transform: translate3d(0%,0,0) scale3d(1,1,1);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-}
+} */
 
 #tinderslide .dislike {
     right: 45px;
