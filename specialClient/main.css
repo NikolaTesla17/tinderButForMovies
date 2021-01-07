@@ -1,0 +1,627 @@
+html, body{
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  background-color: black;
+  z-index: 0;
+  font-family: roboto;
+  font-size: 20px;
+  overflow: auto;
+  user-select: none;
+}
+#chats{
+  height: calc(100% - 20vh);
+  overflow: auto;
+  word-wrap: break-word;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: "Open Sans";
+  font-size: 4vmax;
+}
+#main-container{
+  margin: auto;
+  background-color: #cfd8dc;
+  height: 100%;
+  width: auto;
+  border-radius: 1vh;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+  overflow: hidden;
+}
+#main-container.dissapear{
+  visibility: hidden;
+}
+
+#main-content{
+  position: relative;
+  width: 100%;
+  height: calc(100% - 22vh);
+  background-color: white;
+  z-index: 0;
+  display: inline-block;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+@media (max-width: 1016px) {
+  #main-container {
+    width: 100%;
+  }
+  
+}
+@media (max-width: 312px){
+  #main-container{
+    width: 312px;
+  }
+}
+.label{
+  background: none;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  font-weight: 400;
+  transition-duration: 0s;
+  font-size: inherit;
+  margin: 0;
+  padding: 13px;
+  box-sizing: border-box;
+}
+
+#prompt{
+  border-radius: 2vh;
+  width: 80vw;
+  height: 85vmin;
+  position: fixed;
+  left: calc((100% - 80vw)/2);  
+  top: calc((100% - 85vmin)/2);
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 2px 1px rgba(255, 255, 255, 0.19), 
+              0 4px 2px rgba(255, 255, 255, 0.19), 
+              0 8px 4px rgba(255, 255, 255, 0.19), 
+              0 16px 8px rgba(255, 255, 255, 0.19),
+              0 32px 16px rgba(255, 255, 255, 0.19);
+  font-size: 10vmin;
+  text-align: center;
+    padding-top: 5vmin;
+  box-sizing: border-box;
+}
+
+#monitor{
+  visibility: hidden;
+  border-radius: 2vh;
+  width: 98vw;
+  height: 98vh;
+  position: fixed;
+  left: calc((100% - 98vw)/2);  
+  top: calc((100% - 98vh)/2);
+  z-index: 10;
+  background-color: white;
+  font-size: 10vmin;
+  text-align: center;
+  box-sizing: border-box;
+}
+#menu{
+  visibility: hidden;
+  border-radius: 2vh;
+  width: 98vw;
+  height: 98vh;
+  position: fixed;
+  left: calc((100% - 98vw)/2);
+  top: calc((100% - 98vh)/2);
+  z-index: 10;
+  background-color: white;
+
+  font-size: 10vmin;
+  text-align: center;
+  box-sizing: border-box;
+}
+#monitorTitle{
+  background-color: #0097a7;
+  color: white;
+  border-radius: 2vh;
+  overflow: hidden;
+  padding:2vh;
+  padding-top: 8vh;
+  /* changed from 4 vmin */
+}
+#questionsMonitor{
+  text-align:center;
+  font-size:7vmin;
+  margin-bottom:2vh;
+  padding-top:1vh;
+  padding-bottom:1vh;
+  border-radius: 2vh;
+  background-color: #696969;
+}
+#answersMonitor {
+  position: absolute;
+  width:100%;
+  bottom: 20vh;
+}
+#gameTimeLeft {
+  height:20vh;
+  padding: 1vw;
+  box-sizing: border-box;
+  width: 40vw;
+  border: 0.6vmin solid #696969;
+  border-radius: 2vh;
+  float: left;
+  font-size:6.5vmin;
+}
+#waitingOn {
+  height:20vh;
+  padding: 1vw;
+  box-sizing: border-box;
+  width: 58vw;
+  border: 0.6vmin solid #696969;
+  border-radius: 2vh;
+  float: right;
+  font-size:4vmin;
+}
+#monitorFooter {
+  position: fixed;
+  left: calc((100% - 98vw)/2); 
+  width: 98vw; 
+  bottom: 0vh;
+  background-color: #0097a7;
+  color: white;
+  border-radius: 2vh;
+  overflow: hidden;
+  margin-bottom:1vh;
+}
+#monitorGame{
+width: 72vw;
+margin-left: 3vw;
+margin-top: 1vw;
+font-size: 4vw;
+float: left;
+}
+#monitorButton{
+  float: left;
+  padding:1vh;
+  font-size: 4vw;
+  width: 20vw;
+}
+.monitorText{
+  font-size: 3vw;
+  text-align: left;
+  padding-left: 3vw;
+  visibility: hidden;
+}
+#afk{
+  border-radius: 2vh;
+  width: 80vw;
+  height: 55vmin;
+  position: fixed;
+  left: calc((100% - 80vw)/2);  
+  top: calc((100% - 65vmin)/2);
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 2px 1px rgba(255, 255, 255, 0.19), 
+              0 4px 2px rgba(255, 255, 255, 0.19), 
+              0 8px 4px rgba(255, 255, 255, 0.19), 
+              0 16px 8px rgba(255, 255, 255, 0.19),
+              0 32px 16px rgba(255, 255, 255, 0.19);
+  font-size: 10vmin;
+  text-align: center;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  opacity: 0;
+  transition: opacity 1s; 
+  visibility: hidden;
+}
+#inactive{
+  color: red;
+}
+#afk.visible {
+  opacity: 1;
+  visibility: visible;
+}
+#name{
+  width: 50vw;
+  font-size: 8vw;
+}
+#game{
+  width: 50vw;
+  font-size: 8vw;
+}
+#controls{
+  z-index: 0;
+  padding: 7.5px;
+  width: 100vw;
+  text-align: center;
+  height: 20vh;
+  box-sizing: border-box;
+  white-space:nowrap;
+}
+.message { 
+  float: left; 
+  width: 100%;
+}
+input{
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0);
+  font-family: roboto;
+  padding: 4px 0;
+  text-align: left;
+  transition-duration: 0.3s;
+  font-size: 6vmax;
+}
+
+button{
+  font: 6vmax roboto;
+  background-color: #006064;
+  border-radius: 1vh;
+  border: none;
+  color: white;
+  outline:none;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) ;
+  transition-duration: .2s;
+  padding: 2vw;
+  margin-bottom: 10px;
+}
+.controlButton{
+  /* font: 5.2vmax roboto; */
+  font: 8vmin roboto;
+  float: left;
+  height: 8vh;
+}
+.controlButton2{
+  font: 8vmin roboto;
+  float: right;
+  margin-right: 4vw;
+  width: 67vw;
+  height: 8vh;
+}
+#message{
+  width: 92vw;
+}
+#game-info{
+  font-size: 4.5vmax;
+  padding-right: 0vw;
+  margin-right: 0vw;
+  text-align: center;
+}
+#promptText{
+  font-size: 4.5vmax;
+  padding-right: 0vw;
+  margin-right: 0vw;
+  text-align: center;
+}
+#name-info{
+  font-size: 4.5vmax;
+}
+  #tips{
+    margin-top: 16vh;
+    display: inline-block;
+  }
+    #tipsButton{
+      display: inline-block;
+        font: 2.5vmax roboto;
+          padding: 0.4vw;
+        margin-bottom: 0vw;
+                margin-top: 0vw;
+  }
+      #menuButton{
+          z-index: 12;
+      display: inline-block;
+        font: 3vmax roboto;
+          padding: 0.8vw;
+        margin-bottom: 0vw;
+                margin-top: 0vw;
+                    position: absolute;
+    top: 0;
+    right: 0;
+  }
+        #backButton{
+          z-index: 12;
+          width:12vw;
+      display: inline-block;
+        font: 2vmax roboto;
+          padding: 0.8vw;
+        margin-bottom: 0vw;
+                margin-top: 0vw;
+                    position: absolute;
+    top: 0;
+    right: 86vw;
+ }
+#menuHeader{
+  margin: 0vw;
+  padding-top:8vh;
+  margin-bottom:0vh;
+}
+#rules{
+    margin-top:1vh;
+    margin-bottom:1vh;
+    font-size:3.6vh;
+    padding:2vw;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+#rules{
+    font-size:3.4vh;
+  }
+}
+#newQuestion{
+  display:inline-block;
+  font-size: auto;
+}
+@media only screen and (min-width: 768px) and (orientation: landscape){
+  input{
+    font-size: 3.4vmax;
+  }
+    #menButton{
+     margin-top: 2vh;
+         font: 3vmax roboto;
+  }
+  #menuHeader{
+  margin: 0vw;
+  padding-top:2vh;
+  padding-bottom:2vh;
+}
+  #prompt{
+      height: 85vmin;
+      top: calc((100% - 85vmin)/2);
+      width: 60vw;
+      left: calc((100% - 60vw)/2);  
+      padding-top: 3vh
+  }
+  #controls{
+    width: 100vw;
+  }
+  #rules{
+    font-size:6.4vh;
+    padding:0vw;
+}
+  .controlButton{
+    font: 2.6vmax roboto;
+    padding: 1vw;
+      height: 8vh;
+    }
+  .controlButton2{
+    font: 2.6vmax roboto;
+        padding: 1vw;
+        margin-right: 1vw;
+        width: auto;
+          height: 8vh;
+        
+}
+#message{
+  width: 98vw;
+}
+#game-info{
+  font-size: 5vmax;
+}
+#name-info{
+      font-size: 5vmax;
+}
+#game{
+    font-size: 5vmax;
+}
+#name{
+      font-size: 5vmax;
+}
+  #promptButton{
+     margin-top: 2vh;
+  }
+    #menButton{
+     margin-top: 0vh;
+     padding:1vw;
+  }
+  #tips{
+        font-size: 2vmax;
+      margin-top: 12vh;
+  }
+}
+
+input:focus{
+  outline: none;
+  border-bottom: 1px solid #00bcd4;
+}
+
+.vote{
+    font: 3vmax roboto;
+}
+button:hover{
+  background-color:#00838f;
+}
+#main-label{
+  text-align: center;
+  width: 100%;
+  height: 22vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #0097a7;
+  color: white;
+  font: 4vmax roboto;
+
+
+}
+
+.tooltip{
+  position: fixed;
+  background-color: grey;
+  z-index: 3;
+  color: white;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.name{
+  border-radius: 2px;
+  font-weight: 700;
+}
+.red{
+  color: #b71c1c;
+}
+.green{
+  color: #8bc34a;
+}
+.time{
+  color: #90a4ae;
+  font: 5vmax roboto;
+  float: right;
+  height: 100%;
+  margin-left: 2vw;
+  margin-top: 1vh;
+}
+.boardPoints{
+  color: #90a4ae;
+  font: 5vmin roboto;
+  float: right;
+  height: 100%;
+  margin-left: 2vw;
+  margin-top: 1vh;
+    margin-right: 6vw;
+}
+.delete{
+  height: 25px;
+  font-size: 15px;
+  float: right;
+  background-color: #d32f2f;
+  padding: 5px;
+  box-sizing: border-box;
+}
+.delete:hover{
+  background-color: #b71c1c;
+}
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+    background-color: #eee; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+
+#question {
+  opacity: 1;
+  transition: opacity 0.6s; 
+}
+#question.fade {
+  opacity: 0;
+}
+
+#winner {
+  width: 100%;
+  text-align: center;
+  font-size: 7vmax; 
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  color: white;
+  z-index: 3;
+  visibility: hidden;
+  opacity: 0; 
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  will-change: opacity;
+  word-break: normal;
+}
+ 
+#winner.open {
+  visibility: initial; 
+  opacity: 1;
+  transition: opacity 0.5s ease 1.5s, visibility 0.5s ease 1.5s;
+}
+
+#close {
+  height: 25px;
+  visibility: hidden;
+  opacity: 0; 
+  position: absolute;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  will-change: opacity;
+  top: 40px;
+  right: 40px;
+  z-index: 4;
+  cursor: pointer;
+}
+
+#close.open {
+  visibility: initial; 
+  opacity: 1;
+  transition: opacity 0.5s ease 2.5s, visibility 0.5s ease 2.5s;
+}
+
+#world {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.95);
+  position: fixed;
+  z-index: 2;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  will-change: opacity, visibility;
+}
+
+#world.open {
+  visibility: initial; 
+  opacity: 1;
+  transition: opacity .5s ease, visibility 0.5s ease;
+}
+
+.background {
+  width: 50%;
+  height: 90%;
+  background: linear-gradient(to bottom right, #0000FF, #ADD8E6);
+}
+
+nav {
+  width: 100%;
+  height: 100px;
+}
+
+.navWrapper {
+  width: 85%;
+  margin: auto;
+  padding-top: 38px;
+}
+
+.navWrapper a {
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+header {
+  width: 100%;
+  height: calc(100% - 100px);
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(0.5);
+    transform: skewY(25deg);
+    opacity: 0;
+    box-shadow: none;
+  }
+  100% {
+    transform: scale(1);
+    transform: skewY(0deg);
+    opacity: 1;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+  }
+}

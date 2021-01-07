@@ -31,7 +31,7 @@ app.get("/", function (req, res) {
 let thisRoom = "";
 io.on("connection", function (socket) {
   console.log("connected");
-  socket.on("join room", (data) => {
+  socket.on("join", (data) => {
     console.log('in room');
 
     let Newuser = joinUser(socket.id, data.username,data.roomName)
