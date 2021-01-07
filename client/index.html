@@ -101,7 +101,7 @@ socket.on("movies", (data) => {
         var k = 4;
           for(var i=1;i<6;i++){
             console.log("loading" + i)
-            document.getElementById("pane" + i + "Txt").textContent=data.movieTitles[k];
+            document.getElementById("pane" + i + "Txt").textContent=data.movieTitlesPopular[k];
             document.getElementById("pane" + i + "Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[k] + '")';
           document.getElementById("pane" + i + "Img").style.backgroundSize = "100% 100%";
             k--;
