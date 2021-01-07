@@ -86,6 +86,8 @@ io.on("connection", function (socket) {
             var roomNum = i;
         }
     }
+    console.log("rooms at this point is" + rooms);
+    console.log("roomNum at this point is" + data.roomName);
     if(typeof(rooms[roomNum].movies[data.movie]) == "undefined"){
         rooms[roomNum].movies[data.movie] = 0;
     }

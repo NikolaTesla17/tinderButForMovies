@@ -17,14 +17,7 @@
     <!-- start padding container -->
     <div class="wrap">
         <!-- start jtinder container -->
-        <div id="stationarySlides">
-            <ul id="others">
-                <li class="selectPane">
-                    <div class="dText" id="finishedPaneTxt">Menu</div>
-                    <div class="img" id="finishedPaneImg"></div>
-                </li>
-            </ul>
-        </div>
+
 
         <div id="tinderslide">
             <ul id="Movies">
@@ -63,6 +56,25 @@
                 </li> -->
             </ul>
         </div>
+
+        <div id="stationarySlides">
+            <ul id="others">
+                <li class="selectPane">
+                    <div id="prompt">
+                    <!-- <div class="dText" id="finishedPaneTxt">Menu</div>
+                    <div class="img" id="finishedPaneImg"></div> -->
+                    <div id="room-info">
+                        <span id = "promptText">Room Code:<br/></span>
+                        <input id="room" autocomplete="off" style="margin-bottom: 12px;"/>
+                      </div>
+                      <button id="promptButton" onclick="join()">Join</button>
+                      <!-- <span id = "promptText">Or<br/></span> -->
+                      <button onclick="newRoom()" style="margin-top: 100%; font-size:5vh;">Create New Room</button>
+                    </div>
+                </div>
+                </li>
+            </ul>
+        </div>
         <!-- end jtinder container -->
     </div>
 
@@ -92,10 +104,28 @@
 
 
     <script>
-        let room = prompt("room name");
-        var socket = io();
-        socket.emit("join room", {roomname : room});
-    
+                    let roomNamesMovies = [Up, Heat, Gladiator, Aliens, Alien, Vertigo, Memento, Psycho, Inception];
+                    let usedRooms = 0;
+                    var socket = io();
+                    let room;
+        function join() {
+            room = $('#room').val();
+            if (room=='') room = 'default';
+            socket.emit("join room", {roomname : room});
+            document.getElementById("stationarySlides").style.zIndex = "-1";
+        }
+
+        function newRoom() {
+            if(roomNamesMovies.length!=usedRooms){//needs to be a better way to do this so you can delete rooms and reuse names
+            room = roomNamesMovies[usedRooms];
+            usedRooms++;
+            socket.emit("join room", {roomname : room});
+            document.getElementById("stationarySlides").style.zIndex = "-1";
+            alert("Your room code is " + room);
+            }else if(roomNamesMovies.length==usedRooms){
+                alert("Allright, I'm gonna be real with you, this is a known glitch and a really stupid one at that, hopefully it never happens but if your seeing this, this glitch happened because I couldn't think of any short movie titles, please direct all justified rage towards jk Rowling, thank you");
+            }
+        }
 
 
     
@@ -295,6 +325,7 @@ socket.on("match", (data) => {
         console.log(item.index());
 
         if(!(item.index()==6||item.index()==0)){
+            console.log("room is " + room)
 		socket.emit("like", {roomName : room, movie : 5-item.index()});
         }
         console.log("like");
