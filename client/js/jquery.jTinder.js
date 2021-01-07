@@ -55,29 +55,31 @@
 		showPane: function (index) {
 			panes.eq(current_pane).hide();
 			current_pane = index;
+			console.log("current_pane " + current_pane)
 		},
 
 		next: function () {
 			return this.showPane(current_pane - 1);
 		},
 
-		dislike: function() {
-			panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(-60deg)"}, $that.settings.animationSpeed, function () {
-				if($that.settings.onDislike) {
-					$that.settings.onDislike(panes.eq(current_pane));
-				}
-				$that.next();
-			});
-		},
+		// dislike: function() {
 
-		like: function() {
-			panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
-				if($that.settings.onLike) {
-					$that.settings.onLike(panes.eq(current_pane));
-				}
-				$that.next();
-			});
-		},
+		// 	panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(-60deg)"}, $that.settings.animationSpeed, function () {
+		// 		if($that.settings.onDislike) {
+		// 			$that.settings.onDislike(panes.eq(current_pane));
+		// 		}
+		// 		$that.next();
+		// 	});
+		// },
+
+		// like: function() {
+		// 	panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
+		// 		if($that.settings.onLike) {
+		// 			$that.settings.onLike(panes.eq(current_pane));
+		// 		}
+		// 		$that.next();
+		// 	});
+		// },
 
 		handler: function (ev) {
 			ev.preventDefault();
@@ -98,6 +100,9 @@
 				case 'mousemove':
 				case 'touchmove':
 					if(touchStart === true) {
+
+						// if(current_pane!==7){
+
 						var pageX = typeof ev.pageX == 'undefined' ? ev.originalEvent.touches[0].pageX : ev.pageX;
 						var pageY = typeof ev.pageY == 'undefined' ? ev.originalEvent.touches[0].pageY : ev.pageY;
 						var deltaX = parseInt(pageX) - parseInt(xStart);
@@ -120,10 +125,15 @@
 							panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', opa);
 							panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', 0);
 						}
+
+					// }
+
 					}
 					break;
 				case 'mouseup':
 				case 'touchend':
+					// if(current_pane!==7){
+					// 	console.log("doing the thing" + current_pane)
 					touchStart = false;
 					var pageX = (typeof ev.pageX == 'undefined') ? ev.originalEvent.changedTouches[0].pageX : ev.pageX;
 					var pageY = (typeof ev.pageY == 'undefined') ? ev.originalEvent.changedTouches[0].pageY : ev.pageY;
@@ -159,6 +169,15 @@
 					}
 					break;
 			}
+			// panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(60deg)"}, $that.settings.animationSpeed);
+			// $that.settings.onLike(panes.eq(current_pane));
+			//$that.next();
+
+
+		// }
+
+
+
 		}
 	};
 
