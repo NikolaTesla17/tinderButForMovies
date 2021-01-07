@@ -163,12 +163,13 @@ $('.actions .like, .actions .dislike').click(function(e){
           console.log(data.movieTitles[0]);
           console.log(data.Images[0]);
 
-var k = 0;
-          for(var i=5;i>=1;i--){
+var k = 4;
+          for(var i=1;i<6;i++){
+            console.log("loading" + i)
             document.getElementById("pane" + i + "Txt").textContent=data.movieTitles[k];
             document.getElementById("pane" + i + "Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[k] + '")';
           document.getElementById("pane" + i + "Img").style.backgroundSize = "100% 100%";
-            k++;
+            k--;
           }
 
           //document.getElementById("pane1Txt").textContent=data.movieTitles[0];
@@ -243,9 +244,10 @@ var k = 0;
 	// like callback
     onLike: function (item) {
 
-		socket.emit("like", {username : userName, roomName : room, item : item.index()});
-		console.log("like");
-
+        if(!(item.index()==6||item.index()==0)){
+		socket.emit("like", {username : userName, roomName : room, item : 4-item.index()});
+        }
+        console.log("like");
         //$('#status').html('Like image ' + (item.index()+1));
     },
 	animationRevertSpeed: 200,

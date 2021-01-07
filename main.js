@@ -6,14 +6,14 @@ var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var movieTitles = [];
 var Images = [];
-var Rooms = [];
+var Rooms = {};
 
 const { MovieDb } = require('moviedb-promise')
 const moviedb = new MovieDb('7ebb7372a3c9fe1bbc2a149c8e67cdbb')
 
 moviedb.moviePopular().then(res => {
     var i;
-    for(i=0;i<9;i++){
+    for(i=4;i>=0;i--){
     //console.log(res.results[i])
     movieTitles[i] = res.results[i].original_title;
     Images[i] = res.results[i].poster_path;
@@ -30,6 +30,12 @@ app.get("/", function (req, res) {
 
 let thisRoom = "";
 io.on("connection", function (socket) {
+
+
+
+
+
+
   console.log("connected");
   socket.on("join room", (data) => {
     console.log('in room');
@@ -64,10 +70,11 @@ socket.on("like", (data) => {
     //io.to(thisRoom).emit("like", {data:data.id : socket.id});
 
     //console.log("User");
+    console.log("this room" +thisRoom);
     console.log("got like from " + data.username + " on the movie at " + data.item + " for the room " + data.roomName)
 
 
-    rooms[data.item]+=1;
+    //rooms[data.item]+=1;
 
 
   });
