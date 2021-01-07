@@ -18,6 +18,10 @@
         <!-- start jtinder container -->
         <div id="tinderslide">
             <ul id="Movies">
+                <li class="finalPane">
+                    <div class="img" id="finalPaneImg"></div>
+                    <div class="dText" id="finalPaneTxt">Finished, Swipe this to find more movies</div>
+                </li>
                 <li class="pane1">
                     <div class="img" id="pane1Img"></div>
                     <div class="dText" id="pane1Txt">Loading</div>
@@ -38,7 +42,10 @@
                     <div class="img" id="pane5Img"></div>
                     <div class="dText" id="pane5Txt">Loading</div>
                 </li>
-                <p style = "font-size: 30px;position: absolute;">Finished, Reload to try again</p>
+                <li class="tutorialPane">
+                    <div class="img" id="tutorialPaneImg"></div>
+                    <div class="dText" id="tutorialPaneText">Tutorial slide coming soon</div>
+                </li>
             </ul>
         </div>
         <!-- end jtinder container -->
@@ -236,8 +243,7 @@ var k = 0;
 	// like callback
     onLike: function (item) {
 
-		
-		//socket.emit("like", {username : userName, roomName : room, item = item.index()});
+		socket.emit("like", {username : userName, roomName : room, item : item.index()});
 		console.log("like");
 
         //$('#status').html('Like image ' + (item.index()+1));

@@ -6,6 +6,7 @@ var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var movieTitles = [];
 var Images = [];
+var Rooms = [];
 
 const { MovieDb } = require('moviedb-promise')
 const moviedb = new MovieDb('7ebb7372a3c9fe1bbc2a149c8e67cdbb')
@@ -50,7 +51,6 @@ io.on("connection", function (socket) {
 
 
 
-
   });
 
 
@@ -62,7 +62,14 @@ io.on("connection", function (socket) {
 socket.on("like", (data) => {
     //serverside check likes?
     //io.to(thisRoom).emit("like", {data:data.id : socket.id});
-    console.log("got like" + data.id + data.item)
+
+    //console.log("User");
+    console.log("got like from " + data.username + " on the movie at " + data.item + " for the room " + data.roomName)
+
+
+    rooms[data.item]+=1;
+
+
   });
 
 

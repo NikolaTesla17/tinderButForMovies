@@ -150,6 +150,16 @@ body {
     background-size: cover;
 } */
 
+#tinderslide .finalPane .img {
+    background: url("../img/pane/finalPane.jpg") no-repeat scroll center center;
+    background-size: cover;
+}
+#tinderslide .tutorialPane .img {
+    background: url("../img/pane/tutorialPane.png") no-repeat scroll center center;
+    background-size: cover;
+}
+
+
 /* jTinder status text */
 #status {
     text-align: center;
