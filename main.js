@@ -13,7 +13,6 @@ const moviedb = new MovieDb('7ebb7372a3c9fe1bbc2a149c8e67cdbb')
 moviedb.moviePopular().then(res => {
     var i;
     for(i=4;i>=0;i--){
-    //console.log(res.results[i])
     movieTitlesPopular[i] = res.results[i].original_title;
     Images[i] = res.results[i].poster_path;
 }
@@ -25,8 +24,9 @@ app.get("/", function (req, res) {
 });
 
 
-
-
+moviedb.moviePopular().then(res => {
+console.log("here is the response              " + res);
+}).catch(console.error)
 
 
 

@@ -166,7 +166,10 @@ body {
 }
 
 .dText {
-    padding-top: 1%;
+    position: absolute;
+    padding-top: 185%;
+    text-align: center;
+    /* z-index: 100000000000000000; */
 }
 
 #stationarySlides li {
