@@ -17,6 +17,8 @@
     <!-- start padding container -->
     <div class="wrap">
         <!-- start jtinder container -->
+
+
         <div id="tinderslide">
             <ul id="Movies">
 
@@ -24,14 +26,6 @@
                     <div class="img" id="finishedPaneImg"></div>
                     <div class="dText" id="finishedPaneTxt">Loading</div>
                 </li>
-<<<<<<< HEAD
-
-                <li class="finalPane">
-                    <div class="img" id="finalPaneImg"></div>
-                    <div class="dText" id="finalPaneTxt">Finished, Swipe this to find more movies</div>
-                </li>
-=======
->>>>>>> parent of f00a9e6... deleted things for merge
                 <li class="pane1">
                     <div class="img" id="pane1Img"></div>
                     <div class="dText" id="pane1Txt">Loading</div>
@@ -55,6 +49,29 @@
                 <li class="tutorialPane">
                     <div class="img" id="tutorialPaneImg"></div>
                     <div class="dText" id="tutorialPaneText">Tutorial slide coming soon</div>
+                </li>
+                <!-- <li class="selectPane">
+                    <div class="img" id="finishedPaneImg"></div>
+                    <div class="dText" id="finishedPaneTxt">Loading</div>
+                </li> -->
+            </ul>
+        </div>
+
+        <div id="stationarySlides">
+            <ul id="others">
+                <li class="selectPane">
+                    <div id="prompt">
+                    <!-- <div class="dText" id="finishedPaneTxt">Menu</div>
+                    <div class="img" id="finishedPaneImg"></div> -->
+                    <div id="room-info">
+                        <span id = "promptText">Room Code:<br/></span>
+                        <input id="room" autocomplete="off" style="margin-bottom: 12px;"/>
+                      </div>
+                      <button id="promptButton" onclick="join()">Join</button>
+                      <!-- <span id = "promptText">Or<br/></span> -->
+                      <button onclick="newRoom()" style="margin-top: 70%; font-size:5vh;">Create New Room</button>
+                    </div>
+                </div>
                 </li>
             </ul>
         </div>
@@ -87,13 +104,28 @@
 
 
     <script>
-        let userName = prompt("whats your name");
-        let room = prompt("room name");
-        let ID = "";
-        var socket = io();
-        //send event that user has joined room
-        socket.emit("join room", {username : userName, roomName : room});
-    
+                    let roomNamesMovies = ["Up", "Heat", 'Gladiator', 'Aliens', 'Alien', 'Vertigo','Memento', 'Psycho', 'Inception'];
+                    let usedRooms = 0;
+                    var socket = io();
+                    let room;
+        function join() {
+            room = $('#room').val();
+            if (room=='') room = 'default';
+            socket.emit("join room", {roomname : room});
+            document.getElementById("stationarySlides").style.zIndex = "-1";
+        }
+
+        function newRoom() {
+            if(roomNamesMovies.length!=usedRooms){//needs to be a better way to do this so you can delete rooms and reuse names
+            room = roomNamesMovies[usedRooms];
+            usedRooms++;
+            socket.emit("join room", {roomname : room});
+            document.getElementById("stationarySlides").style.zIndex = "-1";
+            alert("Your room code is " + room);
+            }else if(roomNamesMovies.length==usedRooms){
+                alert("Allright, I'm gonna be real with you, this is a known glitch and a really stupid one at that, hopefully it never happens but if your seeing this, this glitch happened because I couldn't think of any short movie titles, please direct all justified rage towards jk Rowling, thank you");
+            }
+        }
 
 
     
@@ -108,34 +140,11 @@
 socket.on("movies", (data) => {
         var k = 4;
           for(var i=1;i<6;i++){
-            console.log("loading" + i)
-            document.getElementById("pane" + i + "Txt").textContent=data.movieTitles[k];
+            document.getElementById("pane" + i + "Txt").textContent=data.movieTitlesPopular[k];
             document.getElementById("pane" + i + "Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[k] + '")';
           document.getElementById("pane" + i + "Img").style.backgroundSize = "100% 100%";
             k--;
-<<<<<<< HEAD
-          }
-
-          //document.getElementById("pane1Txt").textContent=data.movieTitles[0];
-        //   document.getElementById("pane1Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[0] + '")';
-        //   document.getElementById("pane1Img").style.backgroundSize = "100% 100%";
-
-
-          //document.getElementsByClassName(pane1).style.background = new style
-          //style='background: url("../img/pane/pane5.jpg") no-repeat scroll center center;background-size: cover;'
-            //https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
-
-
-
-        //   var list = document.getElementById('Movies');
-        //   var text = '<div class="img"></div>\n<div class="dText">Miami Beach</div>\n';
-        //   var entry = document.createElement('li');
-        //   entry.setAttribute("class", "pane1");
-        //   entry.appendChild(document.createTextNode(text));
-        //   list.appendChild(entry);
-=======
                     }
->>>>>>> parent of f00a9e6... deleted things for merge
 
 
 
@@ -295,31 +304,15 @@ socket.on("match", (data) => {
 
 
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-
-
-=======
->>>>>>> parent of f00a9e6... deleted things for merge
         $("#tinderslide").jTinder({
 	// dislike callback
     onDislike: function (item) {
 
-<<<<<<< HEAD
+        console.log(item.index());
+
+
         if(!(item.index()==6||item.index()==0)){
-=======
-        if(!(item.index()==7||item.index()==1)){
->>>>>>> parent of f00a9e6... deleted things for merge
-		socket.emit("dislike", {username : userName, roomName : room, item : 5-item.index()});
+		socket.emit("dislike", {roomName : room, movie : 5-item.index()});
         }
 		console.log("dislike");
 
@@ -328,9 +321,12 @@ socket.on("match", (data) => {
 	// like callback
     onLike: function (item) {
 
-        if(!(item.index()==7||item.index()==1)){
-            console.log(item.index());
-		socket.emit("like", {username : userName, roomName : room, item : 5-item.index()});
+
+        console.log(item.index());
+
+        if(!(item.index()==6||item.index()==0)){
+            console.log("room is " + room)
+		socket.emit("like", {roomName : room, movie : 5-item.index()});
         }
         console.log("like");
         //$('#status').html('Like image ' + (item.index()+1));

@@ -4,7 +4,7 @@ var app = express();
 app.use('/', express.static(__dirname + '/client/'));
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
-var movieTitles = [];
+var movieTitlesPopular = [];
 var Images = [];
 
 const { MovieDb } = require('moviedb-promise')
@@ -13,108 +13,92 @@ const moviedb = new MovieDb('7ebb7372a3c9fe1bbc2a149c8e67cdbb')
 moviedb.moviePopular().then(res => {
     var i;
     for(i=4;i>=0;i--){
-    //console.log(res.results[i])
-    movieTitles[i] = res.results[i].original_title;
+    movieTitlesPopular[i] = res.results[i].original_title;
     Images[i] = res.results[i].poster_path;
 }
   }).catch(console.error)
 
-const {joinUser, removeUser, findUser} = require('./users');
+// const {joinUser, removeUser, findUser} = require('./users');
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/client/index.html");
 });
 
 
+moviedb.moviePopular().then(res => {
+console.log("here is the response              " + res);
+}).catch(console.error)
 
 
-let thisRoom = {room:"",movies:[],people:0};
+
+
+
+
+rooms = [];
+// let thisRoom = {room:"",movies:[],people:0,sockets:[]};
 io.on("connection", function (socket) {
-
-
-
-
-
-
-  console.log("connected");
   socket.on("join room", (data) => {
-    console.log('in room');
-
-    let Newuser = joinUser(socket.id, data.username,data.roomName)
-    //io.to(Newuser.roomname).emit('send data' , {username : Newuser.username,roomname : Newuser.roomname, id : socket.id})
-   // io.to(socket.id).emit('send data' , {id : socket.id ,username:Newuser.username, roomname : Newuser.roomname });
-   socket.emit('send data' , {id : socket.id ,username:Newuser.username, roomname : Newuser.roomname });
-   
-    thisRoom.room = Newuser.roomname;
-    console.log(Newuser);
-    socket.join(Newuser.roomname);
-
-    thisRoom.people+=1;
-
-
-    io.to(thisRoom.room).emit("movies", {movieTitles,Images});
 
 
 
+    var foundRoom = false;
+    for (var i=0; i < rooms.length; i++) {
+        if (rooms[i].room == data.roomname) {
+            rooms[i].people++;
+            rooms[i].sockets.push(socket.id);
+            foundRoom = true;
+        }
+    }
+    if(!foundRoom){
+        rooms.push({room:data.roomname,movies:[],people:1,sockets:[socket.id]});
+    }
+    socket.join(data.roomname);
 
+
+
+
+    io.to(data.roomname).emit("movies", {movieTitlesPopular,Images});
+    console.log(rooms);
   });
 
 
-//   socket.on("chat message", (data) => {
-//     io.to(thisRoFthiom).emit("chat message", {data:data,id : socket.id});
-//   });
+  socket.on("dislike", (data) => {
+        // if(typeof(rooms.movies[data.item]) == "undefined"){
+        //     thisRoom.movies[data.item]=0;
+        // }
+        for (var i=0; i < rooms.length; i++) {
+            if (rooms[i].room == data.roomName) {
+                var roomNum = i;
+            }
+        }
+        if(typeof(rooms[roomNum].movies[data.movie]) == "undefined"){
+            rooms[roomNum].movies[data.movie] = 0;
+        }
 
-socket.on("dislike", (data) => {
-    //serverside check likes?
-    //io.to(thisRoom).emit("like", {data:data.id : socket.id});
-
-    //console.log("User");
-    console.log("this room" + data.item);
-
-    if(typeof(thisRoom.movies[data.item]) == "undefined"){
-        thisRoom.movies[data.item]=0;
-    }
-    // thisRoom.movies[data.item]+=1;
-
-    console.log(thisRoom.movies[data.item]+" votes out of "+thisRoom.people)
-    console.log(thisRoom);
-
-
-
+        console.log(rooms);
   });
 
+  socket.on("like", (data) => {
 
 
 
-
-socket.on("like", (data) => {
-    //serverside check likes?
-    //io.to(thisRoom).emit("like", {data:data.id : socket.id});
-
-    //console.log("User");
-    console.log("this room" + data.item);
-
-    if(typeof(thisRoom.movies[data.item]) == "undefined"){
-        thisRoom.movies[data.item]=0;
+    for (var i=0; i < rooms.length; i++) {
+        if (rooms[i].room == data.roomName) {
+            var roomNum = i;
+        }
     }
-    thisRoom.movies[data.item]++;
-
-    console.log(thisRoom.movies[data.item]+" votes out of "+thisRoom.people)
-    console.log(thisRoom);
-
-
-    if(thisRoom.movies[data.item]==thisRoom.people){
-        // movieNum = data.item+1;
-        // console.log("data item" + Images[movieNum] + "        " + movieTitles[movieNum]);  
-<<<<<<< HEAD
-        movieTitle = movieTitles[data.item+1];
-        imgUrl = Images[data.item+1];
-        console.log("stuf" + movieTitle + imgUrl)
-=======
-        movieTitle = movieTitles[data.item];
-        imgUrl = Images[data.item];
->>>>>>> parent of f00a9e6... deleted things for merge
-        io.to(thisRoom.room).emit("match", {movieTitle,imgUrl});
+    console.log("rooms at this point is" + rooms);
+    console.log("roomNum at this point is" + data.roomName);
+    if(typeof(rooms[roomNum].movies[data.movie]) == "undefined"){
+        rooms[roomNum].movies[data.movie] = 0;
     }
+    rooms[roomNum].movies[data.movie]++;
+    if(rooms[roomNum].movies[data.movie]==rooms[roomNum].people){
+        var movieTitle = movieTitlesPopular[data.movie];
+        var imgUrl = Images[data.movie];
+        io.to(data.roomName).emit("match", {movieTitle,imgUrl});
+    }
+
+    console.log(rooms);
   });
 
 
@@ -123,13 +107,15 @@ socket.on("like", (data) => {
 
 
   socket.on("disconnect", () => {
-    const user = removeUser(socket.id);
-    console.log(user);
-    if(user) {
-      console.log(user.username + ' has left');
+    for (var i=0; i < rooms.length; i++) {
+        if (rooms[i].sockets.includes(socket.id)) {
+            rooms[i].people--;
+            rooms[i].sockets.splice(rooms[i].sockets.indexOf(socket.id),1);
+        }
     }
-    console.log("disconnected");
 
+
+    console.log(rooms);
   });
 });
 
