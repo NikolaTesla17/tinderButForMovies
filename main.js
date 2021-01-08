@@ -105,9 +105,14 @@ socket.on("like", (data) => {
     if(thisRoom.movies[data.item]==thisRoom.people){
         // movieNum = data.item+1;
         // console.log("data item" + Images[movieNum] + "        " + movieTitles[movieNum]);  
+<<<<<<< HEAD
         movieTitle = movieTitles[data.item+1];
         imgUrl = Images[data.item+1];
         console.log("stuf" + movieTitle + imgUrl)
+=======
+        movieTitle = movieTitles[data.item];
+        imgUrl = Images[data.item];
+>>>>>>> parent of f00a9e6... deleted things for merge
         io.to(thisRoom.room).emit("match", {movieTitle,imgUrl});
     }
   });

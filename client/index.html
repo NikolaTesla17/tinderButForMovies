@@ -24,11 +24,14 @@
                     <div class="img" id="finishedPaneImg"></div>
                     <div class="dText" id="finishedPaneTxt">Loading</div>
                 </li>
+<<<<<<< HEAD
 
                 <li class="finalPane">
                     <div class="img" id="finalPaneImg"></div>
                     <div class="dText" id="finalPaneTxt">Finished, Swipe this to find more movies</div>
                 </li>
+=======
+>>>>>>> parent of f00a9e6... deleted things for merge
                 <li class="pane1">
                     <div class="img" id="pane1Img"></div>
                     <div class="dText" id="pane1Txt">Loading</div>
@@ -110,6 +113,7 @@ socket.on("movies", (data) => {
             document.getElementById("pane" + i + "Img").style.background = 'url("https://image.tmdb.org/t/p/original' + data.Images[k] + '")';
           document.getElementById("pane" + i + "Img").style.backgroundSize = "100% 100%";
             k--;
+<<<<<<< HEAD
           }
 
           //document.getElementById("pane1Txt").textContent=data.movieTitles[0];
@@ -129,6 +133,9 @@ socket.on("movies", (data) => {
         //   entry.setAttribute("class", "pane1");
         //   entry.appendChild(document.createTextNode(text));
         //   list.appendChild(entry);
+=======
+                    }
+>>>>>>> parent of f00a9e6... deleted things for merge
 
 
 
@@ -288,6 +295,7 @@ socket.on("match", (data) => {
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -300,11 +308,17 @@ socket.on("match", (data) => {
 
 
 
+=======
+>>>>>>> parent of f00a9e6... deleted things for merge
         $("#tinderslide").jTinder({
 	// dislike callback
     onDislike: function (item) {
 
+<<<<<<< HEAD
         if(!(item.index()==6||item.index()==0)){
+=======
+        if(!(item.index()==7||item.index()==1)){
+>>>>>>> parent of f00a9e6... deleted things for merge
 		socket.emit("dislike", {username : userName, roomName : room, item : 5-item.index()});
         }
 		console.log("dislike");
