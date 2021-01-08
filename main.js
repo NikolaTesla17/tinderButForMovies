@@ -93,7 +93,9 @@ io.on("connection", function (socket) {
     }
     rooms[roomNum].movies[data.movie]++;
     if(rooms[roomNum].movies[data.movie]==rooms[roomNum].people){
-        console.log("we have a match")
+        var movieTitle = movieTitlesPopular[data.movie];
+        var imgUrl = Images[data.movie];
+        io.to(data.roomName).emit("match", {movieTitle,imgUrl});
     }
 
     console.log(rooms);
